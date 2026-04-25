@@ -1,0 +1,25 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: development
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: ./frontend/.env.local
+        required: false
+
+  backend:
+    build:
+      context: ./backend
+      target: development
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: ./backend/.env
+        required: false
