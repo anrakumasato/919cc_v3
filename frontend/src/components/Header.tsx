@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation"
 const navItems = [
   { href: "/", label: "ホーム" },
   { href: "/search", label: "検索" },
-  { href: "/small-size", label: "小さいサイズ" },
-  { href: "/large-size", label: "大きいサイズ" },
+  { href: "/size", label: "サイズ別" },
 ]
 
 export default function Header({ totalCount }: { totalCount: number }) {

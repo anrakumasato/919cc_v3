@@ -23,7 +23,7 @@ const navItems = [
     ),
   },
   {
-    href: "/small-size",
+    href: "/size",
     label: "サイズ",
     icon: (active: boolean) => (
       <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.5 : 2}>
