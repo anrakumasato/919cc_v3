@@ -16,7 +16,7 @@ export default function SizePage() {
 
   return (
     <>
-      <Header totalCount={mockSaleItems.length} />
+      <Header />
       <main className="pb-20 md:pb-8 max-w-7xl mx-auto px-4 md:px-8 pt-6">
         <h1 className="text-lg font-black text-gray-900 mb-6">サイズから探す</h1>
         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">

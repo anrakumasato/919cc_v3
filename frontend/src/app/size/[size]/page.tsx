@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import Header from "@/components/Header"
-import SaleTile from "@/components/SaleTile"
+import BrandFilter from "@/components/BrandFilter"
 import { mockSaleItems } from "@/data/mock"
 import { sizeToSlug, slugToSize } from "@/lib/size"
 
@@ -28,9 +28,9 @@ export default async function SizeDetailPage({ params }: Props) {
 
   return (
     <>
-      <Header totalCount={items.length} />
-      <main className="pb-20 md:pb-8">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 pt-4 pb-3 flex items-center gap-3">
+      <Header />
+      <main className="max-w-9xl mx-auto px-0 md:px-2 pb-18 md:pb-8">
+        <div className="px-4 md:px-0 pt-4 pb-1 flex items-center gap-3">
           <Link href="/size" className="text-gray-400 hover:text-gray-700 text-sm transition-colors">
             ← サイズ一覧
           </Link>
@@ -43,13 +43,7 @@ export default async function SizeDetailPage({ params }: Props) {
             <p className="text-lg font-medium">現在 {size} のセール情報はありません</p>
           </div>
         ) : (
-          <div className="max-w-9xl mx-auto px-0 md:px-2">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-0.5 md:gap-2">
-              {items.map((item) => (
-                <SaleTile key={item.id} item={item} />
-              ))}
-            </div>
-          </div>
+          <BrandFilter items={items} />
         )}
       </main>
     </>

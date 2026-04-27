@@ -1,46 +1,34 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Image from "next/image"
 
-const navItems = [
-  { href: "/", label: "ホーム" },
-  { href: "/search", label: "検索" },
-  { href: "/size", label: "サイズ別" },
-]
-
-export default function Header({ totalCount }: { totalCount: number }) {
-  const pathname = usePathname()
-
+export default function Header() {
   return (
-    <header className="sticky top-0 bg-white border-b border-gray-100 z-40">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
+    <header className="sticky top-0 bg-gray-900 z-40">
+      <div className="max-w-9xl mx-auto px-3 md:px-4 py-2.5 flex items-center justify-between">
         {/* ロゴ */}
-        <Link href="/" className="text-xl font-black tracking-tight text-gray-900">
-          919<span className="text-red-500">.band</span>
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image
+            src="/main_icon.jpg"
+            alt="919.cc"
+            width={36}
+            height={36}
+            className="rounded-full object-cover"
+          />
+          <span className="text-white text-sm font-bold leading-tight">
+            あなたのサイズの最安値、見つけます。
+            <span className="text-gray-400 font-normal"> | 919.cc</span>
+          </span>
         </Link>
 
-        {/* PC ナビ */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-sm font-medium transition-colors ${
-                pathname === item.href
-                  ? "text-gray-900"
-                  : "text-gray-400 hover:text-gray-700"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* 検出件数バッジ */}
-        <span className="text-xs bg-red-50 text-red-500 font-semibold px-2.5 py-1 rounded-full">
-          {totalCount}件 検出中
-        </span>
+        {/* サイズから探す */}
+        <Link
+          href="/size"
+          className="text-sm font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+        >
+          サイズから探す
+        </Link>
       </div>
     </header>
   )

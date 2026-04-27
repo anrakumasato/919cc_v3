@@ -14,15 +14,6 @@ const navItems = [
     ),
   },
   {
-    href: "/search",
-    label: "検索",
-    icon: (active: boolean) => (
-      <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={active ? 2.5 : 2}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-      </svg>
-    ),
-  },
-  {
     href: "/size",
     label: "サイズ",
     icon: (active: boolean) => (
