@@ -3,7 +3,6 @@ export type SaleItem = {
   slug: string
   name: string
   brand: string
-  brandColor: string
   parentAsin: string
   standardPrice: number
   anomalySize: string

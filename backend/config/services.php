@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'amazon' => [
+        'credential_id'      => env('AMAZON_CREDENTIAL_ID'),
+        'credential_secret'  => env('AMAZON_CREDENTIAL_SECRET'),
+        'credential_version' => env('AMAZON_CREDENTIAL_VERSION', '3.3'),
+        'partner_tag'        => env('AMAZON_PARTNER_TAG'),
+        'marketplace'        => env('AMAZON_MARKETPLACE', 'www.amazon.co.jp'),
+    ],
+
 ];

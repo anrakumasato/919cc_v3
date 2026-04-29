@@ -2,21 +2,24 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import Header from "@/components/Header"
 import BrandFilter from "@/components/BrandFilter"
-import { mockSaleItems } from "@/data/mock"
-import { sizeToSlug, slugToSize } from "@/lib/size"
+import { getSaleItems, getSizes } from "@/lib/api"
+import { slugToSize } from "@/lib/size"
+
+export const revalidate = 60
+export const dynamicParams = true
 
 type Props = { params: Promise<{ size: string }> }
 
 export async function generateStaticParams() {
-  const sizes = [...new Set(mockSaleItems.map((item) => item.anomalySize))]
-  return sizes.map((size) => ({ size: sizeToSlug(size) }))
+  const sizes = await getSizes()
+  return sizes.map(({ size }) => ({ size: size.replace(".", "-") }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { size: sizeSlug } = await params
   const size = slugToSize(sizeSlug)
   return {
-    title: `${size} スニーカー 最安値 | 919.band`,
+    title: `${size} スニーカー 最安値 | 919.cc`,
     description: `${size}のサイズ限定セールスニーカー一覧。標準価格より15%以上安いサイズを自動検出。`,
   }
 }
@@ -24,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function SizeDetailPage({ params }: Props) {
   const { size: sizeSlug } = await params
   const size = slugToSize(sizeSlug)
-  const items = mockSaleItems.filter((item) => item.anomalySize === size)
+  const items = await getSaleItems(size)
 
   return (
     <>
