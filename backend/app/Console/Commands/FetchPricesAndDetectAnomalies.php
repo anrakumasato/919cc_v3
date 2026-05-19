@@ -72,8 +72,6 @@ class FetchPricesAndDetectAnomalies extends Command
             if ($chunks->count() > 1) sleep(1);
         }
 
-        if (empty($priceMap)) return;
-
         // 価格をDBに反映
         foreach ($sizePrices as $sp) {
             if (isset($priceMap[$sp->child_asin])) {
@@ -82,8 +80,17 @@ class FetchPricesAndDetectAnomalies extends Command
             }
         }
 
+        $fresh = $sizePrices->fresh();
+
+        // 全サイズの価格が取得できなかった場合は非アクティブに
+        if ($fresh->every(fn($sp) => $sp->price === 0)) {
+            $product->is_active = false;
+            $product->save();
+            return;
+        }
+
         // 異常検出: 価格がある行のみ対象
-        $this->detectAnomalies($sizePrices->fresh());
+        $this->detectAnomalies($fresh);
     }
 
     private function detectAnomalies(Collection $sizePrices): void
