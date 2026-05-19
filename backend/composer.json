@@ -5,10 +5,14 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+    "repositories": [
+        { "type": "path", "url": "./creatorsapi-php-sdk" }
+    ],
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.31",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "amazon/creatorsapi-php-sdk": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

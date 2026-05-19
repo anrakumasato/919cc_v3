@@ -47,7 +47,7 @@ class SaleController extends Controller
         return [
             'id'            => $sp->id,
             'slug'          => (string) $product->id,
-            'name'          => $product->seo_name ?? $product->name,
+            'name'          => $product->seo_name ?: $product->name,
             'brand'         => $product->brand,
             'parentAsin'    => $product->parent_asin,
             'standardPrice' => $sp->standard_price,
@@ -63,7 +63,7 @@ class SaleController extends Controller
 
     private function relativeTime(string $fetchedAt): string
     {
-        $diff = (int) now()->diffInMinutes(Carbon::parse($fetchedAt));
+        $diff = max(0, (int) Carbon::parse($fetchedAt)->diffInMinutes(now()));
         if ($diff < 60) return "{$diff}分前";
         $hours = (int) floor($diff / 60);
         if ($hours < 24) return "{$hours}時間前";
