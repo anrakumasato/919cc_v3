@@ -1,4 +1,4 @@
-import { SaleItem } from "@/types/sale"
+import { SaleItem, ItemDetail } from "@/types/sale"
 
 const API_BASE = process.env.API_BASE_URL ?? "http://localhost:8000"
 
@@ -11,6 +11,16 @@ export async function getSaleItems(size?: string): Promise<SaleItem[]> {
     return res.json()
   } catch {
     return []
+  }
+}
+
+export async function getItem(id: number): Promise<ItemDetail | null> {
+  try {
+    const res = await fetch(`${API_BASE}/api/items/${id}`, { next: { revalidate: 60 } })
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
   }
 }
 

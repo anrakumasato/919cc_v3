@@ -26,6 +26,45 @@ class SaleController extends Controller
         return response()->json($items);
     }
 
+    public function show(int $id): JsonResponse
+    {
+        $sizePrice = SizePrice::with('sneakerProduct')->findOrFail($id);
+        $product   = $sizePrice->sneakerProduct;
+        $tag       = config('services.amazon.partner_tag', '');
+
+        $sizes = SizePrice::where('sneaker_product_id', $product->id)
+            ->where('price', '>', 0)
+            ->get()
+            ->sortBy(fn($sp) => (float) $sp->size)
+            ->values();
+
+        return response()->json([
+            'featured' => $this->formatSize($sizePrice, $tag),
+            'product'  => [
+                'id'         => $product->id,
+                'name'       => $product->seo_name ?: $product->name,
+                'brand'      => $product->brand,
+                'imageUrl'   => $product->image_url ?? '',
+                'parentAsin' => $product->parent_asin,
+            ],
+            'sizes' => $sizes->map(fn($sp) => $this->formatSize($sp, $tag)),
+        ]);
+    }
+
+    private function formatSize(SizePrice $sp, string $tag): array
+    {
+        return [
+            'id'            => $sp->id,
+            'size'          => $sp->size,
+            'price'         => $sp->price,
+            'standardPrice' => $sp->standard_price,
+            'discountRate'  => $sp->discount_rate ? (float) $sp->discount_rate : null,
+            'discountAmount' => $sp->standard_price - $sp->price,
+            'isAnomaly'     => (bool) $sp->is_anomaly,
+            'affiliateUrl'  => "https://www.amazon.co.jp/dp/{$sp->child_asin}?tag={$tag}",
+        ];
+    }
+
     public function sizes(): JsonResponse
     {
         $sizes = SizePrice::where('is_anomaly', true)

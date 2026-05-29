@@ -10,7 +10,7 @@ export default function SaleTile({ item }: Props) {
   const discountPct = Math.round(item.discountRate * 100)
 
   return (
-    <Link href={`/items/${item.slug}`}>
+    <Link href={`/items/${item.id}`}>
       <article className="relative aspect-square overflow-hidden cursor-pointer group md:shadow-sm md:hover:shadow-lg md:transition-shadow bg-white">
         {/* 商品画像 */}
         <Image
