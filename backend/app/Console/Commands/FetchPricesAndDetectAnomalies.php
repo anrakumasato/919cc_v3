@@ -29,7 +29,7 @@ class FetchPricesAndDetectAnomalies extends Command
         $offset = (int) $this->option('offset');
 
         $products = SneakerProduct::where('is_active', true)
-            ->offset($offset)
+            ->orderBy('updated_at', 'asc')
             ->limit($limit)
             ->get();
 
@@ -81,6 +81,9 @@ class FetchPricesAndDetectAnomalies extends Command
         }
 
         $fresh = $sizePrices->fresh();
+
+        // 処理済みとして updated_at を更新（次回は他の商品が優先される）
+        $product->touch();
 
         // 全サイズの価格が取得できなかった場合は非アクティブに
         if ($fresh->every(fn($sp) => $sp->price === 0)) {
