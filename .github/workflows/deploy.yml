@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /var/www/919cc
+            cd /srv/919cc
             git pull origin main
-            docker compose -f docker-compose.prod.yml up -d --build backend
+            docker compose -f docker-compose.prod.yml restart backend
             docker image prune -f

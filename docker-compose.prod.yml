@@ -10,6 +10,8 @@ services:
       context: ./backend
       target: production
     volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
       - backend_public:/var/www/html/public
     restart: always
 
@@ -27,4 +29,5 @@ services:
     restart: always
 
 volumes:
+  backend_vendor:
   backend_public:
