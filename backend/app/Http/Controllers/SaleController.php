@@ -44,7 +44,7 @@ class SaleController extends Controller
                 'id'         => $product->id,
                 'name'       => $product->seo_name ?: $product->name,
                 'brand'      => $product->brand,
-                'imageUrl'   => $product->image_url ?? '',
+                'imageUrl'   => $this->largeImageUrl($product->image_url),
                 'parentAsin' => $product->parent_asin,
             ],
             'sizes' => $sizes->map(fn($sp) => $this->formatSize($sp, $tag)),
@@ -96,8 +96,14 @@ class SaleController extends Controller
             'discountAmount' => $sp->standard_price - $sp->price,
             'affiliateUrl'  => "https://www.amazon.co.jp/dp/{$sp->child_asin}?tag={$tag}",
             'detectedAt'    => $this->relativeTime($sp->fetched_at),
-            'imageUrl'      => $product->image_url ?? '',
+            'imageUrl'      => $this->largeImageUrl($product->image_url),
         ];
+    }
+
+    private function largeImageUrl(?string $url): string
+    {
+        if (!$url) return '';
+        return preg_replace('/\._[A-Z]{2}\d+_\./', '._SL500_.', $url);
     }
 
     private function relativeTime(string $fetchedAt): string
