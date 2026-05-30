@@ -27,6 +27,7 @@ services:
       - "443:443"
     volumes:
       - ./backend/public:/var/www/html/public
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - frontend
       - backend
