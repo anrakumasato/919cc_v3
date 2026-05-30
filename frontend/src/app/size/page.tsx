@@ -7,8 +7,12 @@ import { sizeToSlug } from "@/lib/size"
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: "サイズ別 スニーカー 最安値 | 919.cc",
+  title: "スニーカー サイズから探す | 919.cc",
   description: "サイズ別のスニーカーセール情報。あなたのサイズの最安値を今すぐチェック。",
+  openGraph: {
+    title: "スニーカー サイズから探す | 919.cc",
+    description: "サイズ別のスニーカーセール情報。あなたのサイズの最安値を今すぐチェック。",
+  },
 }
 
 export default async function SizePage() {

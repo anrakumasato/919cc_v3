@@ -25,7 +25,7 @@ export default function Header() {
         {/* サイズから探す */}
         <Link
           href="/size"
-          className="text-sm font-medium text-gray-300 hover:text-white transition-colors whitespace-nowrap"
+          className="text-sm font-bold text-white whitespace-nowrap px-4 py-1.5 rounded-full bg-gradient-to-r from-[#f09433] via-[#e6683c] via-[#dc2743] via-[#cc2366] to-[#bc1888] hover:opacity-90 transition-opacity"
         >
           サイズから探す
         </Link>

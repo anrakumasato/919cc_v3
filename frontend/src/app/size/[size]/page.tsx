@@ -46,7 +46,7 @@ export default async function SizeDetailPage({ params }: Props) {
             <p className="text-lg font-medium">現在 {size} のセール情報はありません</p>
           </div>
         ) : (
-          <BrandFilter items={items} />
+          <BrandFilter items={items} hideSize />
         )}
       </main>
     </>

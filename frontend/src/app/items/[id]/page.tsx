@@ -3,7 +3,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Header from "@/components/Header"
-import { getItem } from "@/lib/api"
+import SaleTile from "@/components/SaleTile"
+import { getItem, getSaleItems } from "@/lib/api"
 import { SizeEntry } from "@/types/sale"
 
 export const revalidate = 60
@@ -15,9 +16,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
   const data = await getItem(Number(id))
   if (!data) return {}
+  const title = `${data.product.name} ${data.featured.size} 最安値`
+  const description = `${data.product.name} ${data.featured.size} が¥${data.featured.price.toLocaleString()}。標準価格¥${data.featured.standardPrice.toLocaleString()}より${Math.round((data.featured.discountRate ?? 0) * 100)}%オフ。`
   return {
-    title: `${data.product.name} ${data.featured.size} 最安値 | 919.cc`,
-    description: `${data.product.name} ${data.featured.size} が¥${data.featured.price.toLocaleString()}。標準価格¥${data.featured.standardPrice.toLocaleString()}より${Math.round((data.featured.discountRate ?? 0) * 100)}%オフ。`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: data.product.imageUrl ? [{ url: data.product.imageUrl }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: data.product.imageUrl ? [data.product.imageUrl] : [],
+    },
   }
 }
 
@@ -27,6 +41,10 @@ export default async function ItemPage({ params }: Props) {
   if (!data) notFound()
 
   const { featured, product, sizes } = data
+
+  const relatedItems = (await getSaleItems(featured.size)).filter(
+    (item) => item.slug !== String(product.id)
+  )
 
   return (
     <>
@@ -135,6 +153,20 @@ export default async function ItemPage({ params }: Props) {
             ))}
           </ul>
         </div>
+
+        {/* 同サイズの他の商品 */}
+        {relatedItems.length > 0 && (
+          <div className="mt-6">
+            <h2 className="font-black text-gray-900 px-1 mb-3">
+              {featured.size} の他のセール商品
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-0.5 md:gap-2">
+              {relatedItems.map((item) => (
+                <SaleTile key={item.id} item={item} />
+              ))}
+            </div>
+          </div>
+        )}
 
       </main>
     </>
