@@ -76,7 +76,7 @@ export default function BrandFilter({ items, hideSize = false }: { items: SaleIt
 
             <div className="flex flex-wrap gap-2 overflow-y-auto">
               <button
-                onClick={() => { dialog === "size" ? setSelectedSize(null) : setSelectedBrand(null); setDialog(null) }}
+                onClick={() => { if (dialog === "size") setSelectedSize(null); else setSelectedBrand(null); setDialog(null) }}
                 className="text-sm font-medium px-4 py-1.5 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
               >
                 すべて
@@ -87,7 +87,7 @@ export default function BrandFilter({ items, hideSize = false }: { items: SaleIt
                   <button
                     key={val}
                     onClick={() => {
-                      dialog === "size" ? setSelectedSize(val) : setSelectedBrand(val)
+                      if (dialog === "size") setSelectedSize(val); else setSelectedBrand(val)
                       setDialog(null)
                     }}
                     className={`text-sm font-medium px-4 py-1.5 rounded-full transition-colors ${

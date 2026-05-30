@@ -10,8 +10,7 @@ export default function SaleCard({ item }: Props) {
   return (
     <article className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
       {/* 画像エリア（プレースホルダー） */}
-      <div className="relative aspect-square w-full flex items-center justify-center"
-        style={{ backgroundColor: item.brandColor }}>
+      <div className="relative aspect-square w-full flex items-center justify-center bg-gray-800">
         <span className="text-white text-4xl font-black tracking-tight opacity-20 select-none">
           {item.brand.toUpperCase()}
         </span>
