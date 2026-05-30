@@ -4,7 +4,7 @@ services:
       context: ./frontend
       target: production
     environment:
-      - API_BASE_URL=http://backend:8000
+      - API_BASE_URL=http://nginx
       - NODE_ENV=production
     depends_on:
       - backend

@@ -23,7 +23,7 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/next.config.* ./
-ENV API_BASE_URL=http://backend:8000
+ENV API_BASE_URL=http://nginx
 ENV NODE_ENV=production
 RUN npm ci --omit=dev
 EXPOSE 3000
