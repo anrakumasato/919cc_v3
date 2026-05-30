@@ -7,7 +7,7 @@ import BottomNav from "@/components/BottomNav"
 const geist = Geist({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://919.cc"),
+  metadataBase: new URL("https://919.band"),
   title: {
     default: "スニーカー サイズ限定セール情報 | 919.cc",
     template: "%s | 919.cc",
