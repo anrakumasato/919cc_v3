@@ -14,6 +14,8 @@ CMD ["sh", "-c", "if [ -f artisan ]; then php artisan serve --host=0.0.0.0 --por
 
 # 本番（php-fpm）
 FROM base AS production
+# 本番はエラーをレスポンスに出さない（Deprecated等がJSONに混ざるのを防ぐ）
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY . .
 RUN composer install --no-dev --optimize-autoloader \
     && php artisan config:cache \
